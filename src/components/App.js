@@ -24,6 +24,11 @@ class App extends Component {
         bake_cookie(cookie_key, this.state.notes);
     }
 
+    clear() {
+        delete_cookie(cookie_key);
+        this.setState = ({ notes: [] });
+    }
+
     componentDidMount() {
         this.setState({ notes: read_cookie(cookie_key) });
     }
@@ -32,6 +37,7 @@ class App extends Component {
         return (
             <div>
                 <h2>Note to Self</h2>
+
                 <Form inline>
                     <FormControl onChange={event => this.setState({ text: event.target.value })} />
                     {' '}
@@ -44,6 +50,8 @@ class App extends Component {
                         )
                     })
                 }
+                <hr/>
+                <Button onClick={() => this.clear()}>Delete all Notes</Button>
             </div>
         )
     }
