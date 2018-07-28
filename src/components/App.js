@@ -31,8 +31,9 @@ class App extends Component {
         this.setState({ notes: read_cookie(cookie_key) });
     }
 
-    handleDeleteNote(key) {
+    deleteNote(key) {
         this.setState(prevState => ({ notes: prevState.notes.filter(note => note !== key) }));
+        bake_cookie(cookie_key, this.state.notes);
     }
 
     render() {
@@ -47,7 +48,7 @@ class App extends Component {
                 {
                     this.state.notes.map((note, index) => {
                         return (
-                                <Note key={index} note={note} handleDeleteNote={this.handleDeleteNote.bind(this)} />
+                                <Note key={index} note={note} handleDeleteNote={this.deleteNote.bind(this)} />
                             );
                     })
                 }
