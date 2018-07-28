@@ -17,14 +17,12 @@ class App extends Component {
 
     submit() {
         const { notes, text } = this.state;
-
         notes.push({ text });
         this.setState({ notes })
-
         bake_cookie(cookie_key, this.state.notes);
     }
 
-    clear() {
+    deleteAllNotes() {
         delete_cookie(cookie_key);
         this.setState = ({ notes: [] });
     }
@@ -33,11 +31,14 @@ class App extends Component {
         this.setState({ notes: read_cookie(cookie_key) });
     }
 
+    handleDeleteNote(key) {
+        this.setState(prevState => ({ notes: prevState.notes.filter(note => note !== key) }));
+    }
+
     render() {
         return (
             <div>
                 <h2>Note to Self</h2>
-
                 <Form inline>
                     <FormControl onChange={event => this.setState({ text: event.target.value })} />
                     {' '}
@@ -45,13 +46,13 @@ class App extends Component {
                 </Form>
                 {
                     this.state.notes.map((note, index) => {
-                        return ( 
-                            <Note key={index} note={note}/>
-                        )
+                        return (
+                                <Note key={index} note={note} handleDeleteNote={this.handleDeleteNote.bind(this)} />
+                            );
                     })
                 }
                 <hr/>
-                <Button onClick={() => this.clear()}>Delete all Notes</Button>
+                <Button onClick={() => this.deleteAllNotes()}>Delete all Notes</Button>
             </div>
         )
     }
