@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Note extends Component {
+class Note extends Component {      
     constructor() {
         super()
         this.handleLongPress = this.handleLongPress.bind(this)
@@ -9,8 +9,13 @@ class Note extends Component {
   
     render() {
         return (
-            <div className="note" onMouseDown={this.handleLongPress} onMouseUp={this.handleButtonRelease}>
-            <p>{this.props.note.text}</p>
+            <div 
+                className="note" 
+                onMouseDown={this.handleLongPress} 
+                onMouseUp={this.handleButtonRelease}
+                onClick={() => this.handleEditNote(this.props.note)}
+            >
+                <p>{this.props.note.text}</p>
             </div>
         );
     }
@@ -24,6 +29,10 @@ class Note extends Component {
 
     handleDeleteNote(note) {
         this.props.handleDeleteNote(note);
+    }
+
+    handleEditNote(note) {
+        this.props.handleEditNote(note)
     }
 }
 

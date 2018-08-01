@@ -11,7 +11,8 @@ class App extends Component {
 
         this.state = {
             text: '',
-            notes: []
+            notes: [],
+            value: ''
         }
     }
 
@@ -23,8 +24,8 @@ class App extends Component {
     }
 
     deleteAllNotes() {
-        delete_cookie(cookie_key);
         this.setState = ({ notes: [] });
+        delete_cookie(cookie_key);
     }
 
     componentDidMount() {
@@ -36,19 +37,34 @@ class App extends Component {
         bake_cookie(cookie_key, this.state.notes);
     }
 
+    editNote(note) {
+        const { text } = this.state;
+        this.setState({ value: note })
+        
+        console.log(note)
+    }
+
     render() {
         return (
             <div>
                 <h2>Note to Self</h2>
                 <Form inline>
-                    <FormControl onChange={event => this.setState({ text: event.target.value })} />
+                    <FormControl 
+                        onChange={event => this.setState({ text: event.target.value })}
+                        value={this.state.text}
+                    />
                     {' '}
                     <Button onClick={()=>{this.submit()}}>Submit</Button>
                 </Form>
                 {
                     this.state.notes.map((note, index) => {
                         return (
-                                <Note key={index} note={note} handleDeleteNote={this.deleteNote.bind(this)} />
+                                <Note 
+                                    key={index} 
+                                    note={note} 
+                                    handleDeleteNote={this.deleteNote.bind(this)} 
+                                    handleEditNote={this.editNote.bind(this)}
+                                />
                             );
                     })
                 }
