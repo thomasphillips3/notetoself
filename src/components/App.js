@@ -18,13 +18,13 @@ class App extends Component {
     submit() {
         const { notes, text } = this.state;
         notes.push({ text });
-        this.setState({ notes })
+        this.setState({ notes });
         bake_cookie(cookie_key, this.state.notes);
     }
 
     deleteAllNotes() {
         delete_cookie(cookie_key);
-        this.setState = ({ notes: [] });
+        this.setState({ notes: [] });
     }
 
     componentDidMount() {
