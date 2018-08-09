@@ -10,7 +10,7 @@ class Note extends Component {
     render() {
         return (
             <div className="note" onMouseDown={this.handleLongPress} onMouseUp={this.handleButtonRelease}>
-            <p>{this.props.note.text}</p>
+                <p>{this.props.note.text}</p>
             </div>
         );
     }
